@@ -7,7 +7,7 @@ export interface PatientData {
 }
 export const askAI = async (data: PatientData) => {
   try {
-    const response = await fetch("https://backend-app-assistant.onrender.com/ask", {
+    const response = await fetch("https://zerotwo-ai-backend.onrender.com/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

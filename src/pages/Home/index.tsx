@@ -12,6 +12,7 @@ import {
 } from "./style";
 import FormInput from "../../components/FormInput";
 import FormSelect from "../../components/FormSelect";
+import { disclaimerText } from "../../constants/disclaimerText";
 
 const inputFields = [
   { label: "Аллергические реакции", name: "allergies" },
@@ -102,7 +103,7 @@ const Home = () => {
           value={formData.age}
           onChange={handleChange}
           required
-          small 
+          small
         />
 
         {inputFields.map(({ label, name }) => (
@@ -128,10 +129,14 @@ const Home = () => {
         </StyledButton>
       </Form>
 
-      {answer && (
+      {(loading || answer) && (
         <ResultContainer>
           <ResultPre>
-            <ReactMarkdown>{answer}</ReactMarkdown>
+            {loading ? (
+              <ReactMarkdown>{disclaimerText}</ReactMarkdown>
+            ) : (
+              <ReactMarkdown>{answer}</ReactMarkdown>
+            )}
           </ResultPre>
         </ResultContainer>
       )}

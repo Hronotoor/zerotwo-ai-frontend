@@ -5,10 +5,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  max-width: 600px;
   margin: 0px auto;
   font-family: "Roboto", sans-serif;
   padding: 20px;
+  height: 100vh;
+  align-items: center;
 `;
 
 export const Title = styled(Typography)`
@@ -19,6 +20,11 @@ export const Form = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: 600px;
+  width: 100%;
+  padding: 32px;
+  background-color: #1589be5b;
+  border: 3px solid #1588beff;
 `;
 
 export const ErrorText = styled.p`
@@ -33,29 +39,29 @@ export const StyledButton = styled(Button)`
 
 export const ResultContainer = styled.div`
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 export const ResultPre = styled.div`
-  background: #111;
-  color: #eee;
-  padding: 16px;
-  border-radius: 6px;
+  max-width: 80%;
   overflow-x: auto;
+  padding-bottom: 32px;
 
   h3,
   h4,
   h5,
   h6 {
-    color: #90caf9;
+    color: #632954ff;
     margin-top: 12px;
   }
 
   strong {
-    color: #ffcc80;
+    color: #5a2c5aff;
   }
 
   em {
-    color: #a5d6a7;
+    color: #be0202ff;
   }
 
   ul,
@@ -64,7 +70,6 @@ export const ResultPre = styled.div`
   }
 
   code {
-    background: #222;
     padding: 2px 4px;
     border-radius: 4px;
   }
