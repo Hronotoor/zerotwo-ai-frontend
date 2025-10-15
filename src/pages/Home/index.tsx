@@ -9,15 +9,23 @@ import {
   StyledButton,
   ResultContainer,
   ResultPre,
+  InputContainer,
 } from "./style";
 import FormInput from "../../components/FormInput";
 import FormSelect from "../../components/FormSelect";
 import { disclaimerText } from "../../constants/disclaimerText";
+import CustomTooltip from "../../components/Tooltip";
+import type { SelectChangeEvent } from "@mui/material";
+import AgeInput from "../../components/FormInput/AgeInput";
 
 const inputFields = [
-  { label: "Аллергические реакции", name: "allergies" },
-  { label: "Диагноз", name: "diagnosis" },
-  { label: "Назначения", name: "prescriptions" },
+  {
+    label: "Аллергические реакции",
+    name: "allergies",
+    text: "Текст для аллергий",
+  },
+  { label: "Диагноз", name: "diagnosis", text: "Текст для показаний" },
+  { label: "Назначения", name: "prescriptions", text: "Текст для диагноза" },
 ];
 
 const Home = () => {
@@ -27,6 +35,7 @@ const Home = () => {
     allergies: "",
     diagnosis: "",
     prescriptions: "",
+    other: "",
   });
 
   const [answer, setAnswer] = useState("");
@@ -34,7 +43,7 @@ const Home = () => {
   const [errors, setErrors] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -68,7 +77,12 @@ const Home = () => {
     setLoading(true);
 
     try {
-      const result = await askAI(formData);
+      const dataToSend = {
+        ...formData,
+        other: formData.other || undefined,
+      };
+
+      const result = await askAI(dataToSend);
       setAnswer(result);
     } catch (error) {
       const errorMessage =
@@ -85,7 +99,7 @@ const Home = () => {
 
       <Form>
         <FormSelect
-          label="Пол"
+          label="Пол*"
           name="gender"
           value={formData.gender}
           onChange={handleChange}
@@ -96,26 +110,40 @@ const Home = () => {
           ]}
         />
 
-        <FormInput
+        <AgeInput
           label="Возраст"
           name="age"
-          type="number"
           value={formData.age}
           onChange={handleChange}
           required
-          small
         />
 
-        {inputFields.map(({ label, name }) => (
-          <FormInput
-            key={name}
-            label={label}
-            name={name}
-            value={formData[name as keyof typeof formData]}
-            onChange={handleChange}
-            required
-          />
+        {inputFields.map(({ label, name, text }) => (
+          <InputContainer key={name}>
+            <FormInput
+              label={label}
+              name={name}
+              value={formData[name as keyof typeof formData]}
+              onChange={handleChange}
+              required
+              multiline={true}
+              minRows={1}
+            />
+            <CustomTooltip text={text} />
+          </InputContainer>
         ))}
+
+        <InputContainer>
+          <FormInput
+            label="Другое (необязательно)"
+            name="other"
+            value={formData.other}
+            onChange={handleChange}
+            multiline={true}
+            minRows={1}
+          />
+          <CustomTooltip text="Дополнительная информация о пациенте" />
+        </InputContainer>
 
         {errors && <ErrorText>{errors}</ErrorText>}
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 export const Container = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ export const Title = styled(Typography)`
 export const Form = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   max-width: 600px;
   width: 100%;
   padding: 32px;
@@ -35,6 +35,7 @@ export const ErrorText = styled.p`
 
 export const StyledButton = styled(Button)`
   width: fit-content;
+  margin-top: 16px;
 `;
 
 export const ResultContainer = styled.div`
@@ -73,4 +74,12 @@ export const ResultPre = styled.div`
     padding: 2px 4px;
     border-radius: 4px;
   }
+`;
+
+export const InputContainer = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
 `;

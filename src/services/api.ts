@@ -4,6 +4,7 @@ export interface PatientData {
   allergies: string;
   diagnosis: string;
   prescriptions: string;
+  other?: string;
 }
 export const askAI = async (data: PatientData) => {
   try {

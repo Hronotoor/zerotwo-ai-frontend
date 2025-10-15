@@ -1,4 +1,4 @@
-import { StyledLabel, StyledInput } from "./style";
+import { StyledTextField } from "./style";
 
 interface FormInputProps {
   label: string;
@@ -8,6 +8,8 @@ interface FormInputProps {
   required?: boolean;
   type?: string;
   small?: boolean;
+  multiline?: boolean;
+  minRows?: number;
 }
 
 const FormInput = ({
@@ -17,19 +19,21 @@ const FormInput = ({
   onChange,
   required,
   type = "text",
-  small = false,
+  multiline = false,
+  minRows = 1,
 }: FormInputProps) => (
-  <StyledLabel>
-    {label}
-    <StyledInput
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      $small={small}
-    />
-  </StyledLabel>
+  <StyledTextField
+    label={label}
+    name={name}
+    value={value}
+    onChange={onChange}
+    required={required}
+    type={type}
+    multiline={multiline}
+    minRows={minRows}
+    variant="outlined"
+    fullWidth
+  />
 );
 
 export default FormInput;

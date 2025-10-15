@@ -1,13 +1,33 @@
-import { StyledLabel, StyledSelect } from "./style";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  type SelectChangeEvent,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 interface FormSelectProps {
   label: string;
   name: string;
   value: string;
   required?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (e: SelectChangeEvent) => void;
   options: { value: string; label: string }[];
 }
+
+const StyledFormControl = styled(FormControl)({
+  "& .MuiFormLabel-root": {
+    color: "#000000",
+    "&.Mui-focused": {
+      color: "#000000",
+    },
+  },
+  "& .MuiOutlinedInput-root": {
+    backgroundColor: "#87d3f7",
+    width: "100px",
+  },
+});
 
 const FormSelect = ({
   label,
@@ -18,17 +38,26 @@ const FormSelect = ({
   options,
 }: FormSelectProps) => {
   return (
-    <StyledLabel>
-      {label}
-      <StyledSelect name={name} value={value} onChange={onChange} required={required}>
-        <option value="">Выберите...</option>
+    <StyledFormControl fullWidth>
+      <InputLabel id={`${name}-label`}>{label}</InputLabel>
+      <Select
+        labelId={`${name}-label`}
+        name={name}
+        value={value}
+        label={label}
+        onChange={onChange}
+        required={required}
+      >
+        <MenuItem value="">
+          <em>Выберите...</em>
+        </MenuItem>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <MenuItem key={opt.value} value={opt.value}>
             {opt.label}
-          </option>
+          </MenuItem>
         ))}
-      </StyledSelect>
-    </StyledLabel>
+      </Select>
+    </StyledFormControl>
   );
 };
 
