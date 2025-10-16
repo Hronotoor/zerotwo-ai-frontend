@@ -1,11 +1,10 @@
 import {
-  FormControl,
   InputLabel,
   Select,
   MenuItem,
   type SelectChangeEvent,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { StyledFormControl } from "./style";
 
 interface FormSelectProps {
   label: string;
@@ -15,19 +14,6 @@ interface FormSelectProps {
   onChange: (e: SelectChangeEvent) => void;
   options: { value: string; label: string }[];
 }
-
-const StyledFormControl = styled(FormControl)({
-  "& .MuiFormLabel-root": {
-    color: "#000000",
-    "&.Mui-focused": {
-      color: "#000000",
-    },
-  },
-  "& .MuiOutlinedInput-root": {
-    backgroundColor: "#87d3f7",
-    width: "100px",
-  },
-});
 
 const FormSelect = ({
   label,

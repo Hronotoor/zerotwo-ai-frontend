@@ -1,22 +1,31 @@
-import styled from "styled-components";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, styled, Typography } from "@mui/material";
 
-export const Container = styled.div`
+export const Container = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 32px;
   margin: 0px auto;
   font-family: "Roboto", sans-serif;
-  padding: 20px;
   height: 100vh;
   align-items: center;
 `;
 
-export const Title = styled(Typography)`
-  text-align: start;
+export const Title = styled(Typography)(({ theme }) => ({
+  textAlign: "start",
+  fontSize: "48px",
+  fontWeight: 700,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "32px",
+    fontWeight: 600,
+  },
+}));
+
+export const FormContainer = styled(Box)`
+  width: 100%;
+  padding: 16px;
 `;
 
-export const Form = styled.div`
+export const Form = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -25,9 +34,11 @@ export const Form = styled.div`
   padding: 32px;
   background-color: #1589be5b;
   border: 3px solid #1588beff;
+  border-radius: 16px;
+  margin: 0 auto;
 `;
 
-export const ErrorText = styled.p`
+export const ErrorText = styled("p")`
   color: red;
   margin: 0;
   font-size: 14px;
@@ -35,19 +46,24 @@ export const ErrorText = styled.p`
 
 export const StyledButton = styled(Button)`
   width: fit-content;
-  margin-top: 16px;
+  margin-top: 24px;
 `;
 
-export const ResultContainer = styled.div`
+export const ResultContainer = styled("div")`
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  width: 100%;
+  background-color: #1589be5b;
+  padding: 24px 0;
+  border-top: 3px solid #1588beff;
 `;
 
-export const ResultPre = styled.div`
+export const ResultPre = styled("div")`
   max-width: 80%;
   overflow-x: auto;
   padding-bottom: 32px;
+  line-height: 2rem;
 
   h3,
   h4,
@@ -63,6 +79,7 @@ export const ResultPre = styled.div`
 
   em {
     color: #be0202ff;
+    font-weight: 600;
   }
 
   ul,
@@ -82,4 +99,36 @@ export const InputContainer = styled(Box)`
   align-items: center;
   gap: 8px;
   justify-content: space-between;
+`;
+
+export const TitleContainer = styled(Box)`
+  width: 100%;
+  background-color: #1589be5b;
+  padding: 32px;
+  border-bottom: 3px solid #1588beff;
+`;
+
+export const LoadingContainer = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const LoadingSpinner = styled("div")`
+  width: 50px;
+  height: 50px;
+  border: 4px solid #1589be5b;
+  border-top: 4px solid #1588beff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;

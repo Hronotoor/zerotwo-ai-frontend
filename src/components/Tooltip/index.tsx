@@ -11,6 +11,7 @@ const CustomTooltip = (props: { text: string }) => {
       disableFocusListener={false}
       disableHoverListener={false}
       disableTouchListener={false}
+      placement="top"
     >
       <InfoIcon />
     </Tooltip>

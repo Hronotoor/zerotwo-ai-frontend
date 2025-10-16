@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import type { SelectChangeEvent } from "@mui/material";
 import { askAI } from "../../services/api";
+import FormInput from "../../components/FormInput";
+import FormSelect from "../../components/FormSelect";
+import { disclaimerText } from "../../constants/disclaimerText";
+import CustomTooltip from "../../components/Tooltip";
+import AgeInput from "../../components/FormInput/AgeInput";
+import { inputFields, OTHER } from "../../constants/intputFields";
 import {
   Container,
   Title,
@@ -10,23 +17,11 @@ import {
   ResultContainer,
   ResultPre,
   InputContainer,
+  TitleContainer,
+  FormContainer,
+  LoadingContainer,
+  LoadingSpinner,
 } from "./style";
-import FormInput from "../../components/FormInput";
-import FormSelect from "../../components/FormSelect";
-import { disclaimerText } from "../../constants/disclaimerText";
-import CustomTooltip from "../../components/Tooltip";
-import type { SelectChangeEvent } from "@mui/material";
-import AgeInput from "../../components/FormInput/AgeInput";
-
-const inputFields = [
-  {
-    label: "Аллергические реакции",
-    name: "allergies",
-    text: "Текст для аллергий",
-  },
-  { label: "Диагноз", name: "diagnosis", text: "Текст для показаний" },
-  { label: "Назначения", name: "prescriptions", text: "Текст для диагноза" },
-];
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -41,6 +36,7 @@ const Home = () => {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string | null>(null);
+  const resultContainerRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
@@ -64,6 +60,15 @@ const Home = () => {
     return null;
   };
 
+  const scrollToResult = () => {
+    setTimeout(() => {
+      resultContainerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
   const handleSubmit = async () => {
     setErrors(null);
     setAnswer("");
@@ -75,6 +80,7 @@ const Home = () => {
     }
 
     setLoading(true);
+    scrollToResult();
 
     try {
       const dataToSend = {
@@ -95,67 +101,77 @@ const Home = () => {
 
   return (
     <Container>
-      <Title variant="h4">Медицинский ассистент</Title>
+      <TitleContainer>
+        <Title>MedAI Assistant</Title>
+      </TitleContainer>
 
-      <Form>
-        <FormSelect
-          label="Пол*"
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-          options={[
-            { value: "Муж", label: "Муж" },
-            { value: "Жен", label: "Жен" },
-          ]}
-        />
+      <FormContainer>
+        <Form>
+          <FormSelect
+            label="Пол*"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            options={[
+              { value: "Муж", label: "Муж" },
+              { value: "Жен", label: "Жен" },
+            ]}
+          />
 
-        <AgeInput
-          label="Возраст"
-          name="age"
-          value={formData.age}
-          onChange={handleChange}
-          required
-        />
+          <AgeInput
+            label="Возраст"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            required
+          />
 
-        {inputFields.map(({ label, name, text }) => (
-          <InputContainer key={name}>
+          {inputFields.map(({ label, name, text }) => (
+            <InputContainer key={name}>
+              <FormInput
+                label={label}
+                name={name}
+                value={formData[name as keyof typeof formData]}
+                onChange={handleChange}
+                required
+                multiline={true}
+                minRows={1}
+              />
+              <CustomTooltip text={text} />
+            </InputContainer>
+          ))}
+
+          <InputContainer>
             <FormInput
-              label={label}
-              name={name}
-              value={formData[name as keyof typeof formData]}
+              label="Другое (необязательно)"
+              name="other"
+              value={formData.other}
               onChange={handleChange}
-              required
               multiline={true}
               minRows={1}
             />
-            <CustomTooltip text={text} />
+            <CustomTooltip text={OTHER} />
           </InputContainer>
-        ))}
 
-        <InputContainer>
-          <FormInput
-            label="Другое (необязательно)"
-            name="other"
-            value={formData.other}
-            onChange={handleChange}
-            multiline={true}
-            minRows={1}
-          />
-          <CustomTooltip text="Дополнительная информация о пациенте" />
-        </InputContainer>
+          {errors && <ErrorText>{errors}</ErrorText>}
 
-        {errors && <ErrorText>{errors}</ErrorText>}
+          <StyledButton
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? "Загрузка..." : "Отправить"}
+          </StyledButton>
+        </Form>
+      </FormContainer>
 
-        <StyledButton
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? "Загрузка..." : "Отправить"}
-        </StyledButton>
-      </Form>
+      {loading && (
+        <LoadingContainer ref={resultContainerRef}>
+          <LoadingSpinner />
+        </LoadingContainer>
+      )}
 
       {(loading || answer) && (
         <ResultContainer>
