@@ -47,6 +47,9 @@ export const ErrorText = styled("p")`
 export const StyledButton = styled(Button)`
   width: fit-content;
   margin-top: 24px;
+  padding: 12px 36px;
+  background-color: #1588beff;
+  font-weight: 700;
 `;
 
 export const ResultContainer = styled("div")`
@@ -65,12 +68,29 @@ export const ResultPre = styled("div")`
   padding-bottom: 32px;
   line-height: 2rem;
 
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     color: #632954ff;
     margin-top: 12px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.8rem; }
+  h3 { font-size: 1.6rem; }
+  h4 { font-size: 1.4rem; }
+  h5 { font-size: 1.2rem; }
+  h6 { font-size: 1.1rem; }
+
+  ul, ol {
+    margin-left: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-size: 1rem;
   }
 
   strong {
@@ -82,14 +102,13 @@ export const ResultPre = styled("div")`
     font-weight: 600;
   }
 
-  ul,
-  ol {
-    margin-left: 20px;
-  }
-
   code {
     padding: 2px 4px;
     border-radius: 4px;
+  }
+
+  & > * {
+    font-size: 1rem;
   }
 `;
 

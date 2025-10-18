@@ -102,7 +102,7 @@ const Home = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>MedAI Assistant</Title>
+        <Title>МЕДИЦИНСКИЙ ИИ АССИСТЕНТ</Title>
       </TitleContainer>
 
       <FormContainer>
