@@ -101,6 +101,7 @@ export const ResultPre = styled("div")`
 
   strong {
     color: #5a2c5aff;
+    font-size: 1rem;
   }
 
   em {
