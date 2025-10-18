@@ -76,6 +76,25 @@ export const ResultPre = styled("div")`
     margin-top: 12px;
   }
 
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  h3 {
+    font-size: 1.6rem;
+  }
+  h4 {
+    font-size: 1.4rem;
+  }
+  h5 {
+    font-size: 1.2rem;
+  }
+  h6 {
+    font-size: 1.1rem;
+  }
+
   p {
     font-size: 1rem;
   }
@@ -95,7 +114,7 @@ export const ResultPre = styled("div")`
   }
 
   li {
-   font-size: 1rem;
+    font-size: 1rem;
   }
 
   code {
